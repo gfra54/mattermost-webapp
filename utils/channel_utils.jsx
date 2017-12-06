@@ -115,6 +115,22 @@ export function showManagementOptions(channel, isChannelAdmin, isTeamAdmin, isSy
     return true;
 }
 
+export function showConvertOption(channel, isTeamAdmin, isSystemAdmin) {
+    if (ChannelUtilsRedux.isDefault(channel)) {
+        return false;
+    }
+
+    if (channel.type === Constants.PRIVATE_CHANNEL) {
+        return false;
+    }
+
+    if (!isTeamAdmin && !isSystemAdmin) {
+        return false;
+    }
+
+    return true;
+}
+
 export function showDeleteOptionForCurrentUser(channel, isChannelAdmin, isTeamAdmin, isSystemAdmin) {
     if (global.window.mm_license.IsLicensed !== 'true') {
         // policies are only enforced in enterprise editions
