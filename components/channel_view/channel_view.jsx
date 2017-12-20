@@ -15,6 +15,7 @@ import CreatePost from 'components/create_post';
 import FileUploadOverlay from 'components/file_upload_overlay.jsx';
 import PostView from 'components/post_view';
 import TutorialView from 'components/tutorial/tutorial_view.jsx';
+import {clearMarks, mark, measure} from 'actions/diagnostics_actions.jsx';
 
 export default class ChannelView extends React.PureComponent {
     static propTypes = {
@@ -70,7 +71,19 @@ export default class ChannelView extends React.PureComponent {
         return this.refs.channelView;
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.channelId !== this.props.channelId) {
+            mark('ChannelView#componentDidUpdate');
+
+            measure('SidebarChannelLink#click', 'ChannelView#componentDidUpdate');
+            measure('SidebarChannelLink#click', 'ChannelView#render');
+
+            clearMarks(['SidebarChannelLink#click', 'ChannelView#componentDidUpdate', 'ChannelView#render']);
+        }
+    }
+
     render() {
+        mark('ChannelView#render');
         if (this.props.showTutorial) {
             return (
                 <TutorialView

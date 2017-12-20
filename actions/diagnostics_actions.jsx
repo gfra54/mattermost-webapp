@@ -22,3 +22,32 @@ export function trackEvent(category, event, props) {
         global.window.analytics.track('event', properties, options);
     }
 }
+
+export function clearMarks(names) {
+    names.forEach((name) => performance.clearMarks(name));
+}
+
+export function mark(name) {
+    performance.mark(name);
+}
+
+export function measure(name1, name2) {
+    // Check for existence of entry name to avoid DOMException
+    const performanceEntries = performance.getEntries();
+    if (![name1, name2].every((name) => performanceEntries.find((item) => item.name === name))) {
+        return null;
+    }
+
+    const measurementName = `${name1} - ${name2}`;
+    performance.measure(`🐐 Mattermost: ${measurementName}`, name1, name2);
+    const lastDuration = mostRecentDurationByEntryName(measurementName);
+
+    // Clean up
+    performance.clearMeasures(measurementName);
+    return lastDuration;
+}
+
+function mostRecentDurationByEntryName(entryName) {
+    const entriesWithName = performance.getEntriesByName(entryName);
+    return entriesWithName.map((item) => item.duration)[entriesWithName.length - 1];
+}
