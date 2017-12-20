@@ -24,14 +24,24 @@ export function trackEvent(category, event, props) {
 }
 
 export function clearMarks(names) {
+    if (!global.__DEV__) {
+        return;
+    }
     names.forEach((name) => performance.clearMarks(name));
 }
 
 export function mark(name) {
+    if (!global.__DEV__) {
+        return;
+    }
     performance.mark(name);
 }
 
 export function measure(name1, name2) {
+    if (!global.__DEV__) {
+        return;
+    }
+
     // Check for existence of entry name to avoid DOMException
     const performanceEntries = performance.getEntries();
     if (![name1, name2].every((name) => performanceEntries.find((item) => item.name === name))) {

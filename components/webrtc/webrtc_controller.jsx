@@ -683,7 +683,7 @@ export default class WebrtcController extends React.Component {
                         });
                     }
 
-                    Janus.init({debug: global.mm_config.EnableDeveloper === 'true'});
+                    Janus.init({debug: global.__DEV__});
                     this.session = new Janus({
                         server: info.gateway_url,
                         iceServers,

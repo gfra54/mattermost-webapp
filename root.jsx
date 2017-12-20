@@ -51,7 +51,7 @@ function preRenderSetup(callwhendone) {
             data: JSON.stringify(l)
         });
 
-        if (window.mm_config && window.mm_config.EnableDeveloper === 'true') {
+        if (global.__DEV__) {
             window.ErrorStore.storeLastError({type: 'developer', message: 'DEVELOPER MODE: A JavaScript error has occurred.  Please use the JavaScript console to capture and report the error (row: ' + line + ' col: ' + column + ').'});
             window.ErrorStore.emitChange();
         }
@@ -67,7 +67,7 @@ function preRenderSetup(callwhendone) {
         getClientConfig()(store.dispatch, store.getState).then(
             ({data: config}) => {
                 global.window.mm_config = config;
-
+                global.__DEV__ = config && config.EnableDeveloper === 'true';
                 getLicenseConfig()(store.dispatch, store.getState).then(
                     ({data: license}) => {
                         global.window.mm_license = license;

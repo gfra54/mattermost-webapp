@@ -22,7 +22,6 @@ export default class DeveloperSettings extends AdminSettings {
 
     getConfigFromState(config) {
         config.ServiceSettings.EnableTesting = this.state.enableTesting;
-        config.ServiceSettings.EnableDeveloper = this.state.enableDeveloper;
         config.ServiceSettings.AllowedUntrustedInternalConnections = this.state.allowedUntrustedInternalConnections;
 
         return config;
@@ -31,7 +30,7 @@ export default class DeveloperSettings extends AdminSettings {
     getStateFromConfig(config) {
         return {
             enableTesting: config.ServiceSettings.EnableTesting,
-            enableDeveloper: config.ServiceSettings.EnableDeveloper,
+            enableDeveloper: global.__DEV__,
             allowedUntrustedInternalConnections: config.ServiceSettings.AllowedUntrustedInternalConnections
         };
     }
