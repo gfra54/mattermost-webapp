@@ -244,7 +244,8 @@ export const ModalIdentifiers = {
     DELETE_CHANNEL: 'delete_channel',
     CHANNEL_NOTIFICATIONS: 'channel_notifications',
     CHANNEL_INVITE: 'channel_invite',
-    EDIT_CHANNEL_HEADER: 'edit_channel_header'
+    EDIT_CHANNEL_HEADER: 'edit_channel_header',
+    CONVERT_CHANNEL: 'convert_channel'
 };
 
 export const UserStatuses = {
